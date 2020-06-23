@@ -40,7 +40,7 @@ class SoapRequestHelper {
 
 	/**
 	 * @Flow\Inject
-	 * @var \Neos\Flow\Object\ObjectManagerInterface
+	 * @var \Neos\Flow\ObjectManagement\ObjectManagerInterface
 	 */
 	protected $objectManager;
 

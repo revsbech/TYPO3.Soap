@@ -2,8 +2,7 @@
 # Default settings for the package "Soap"                                #
 #                                                                        #
 
-TYPO3:
-
+Neos:
   Flow:
     http:
       chain:
@@ -12,6 +11,7 @@ TYPO3:
             'soap':
               position: 'before routing'
               component: 'TYPO3\Soap\Http\SoapComponent'
+TYPO3:
   Soap:
 
     wsdlResponseContentType: 'application/wsdl+xml'

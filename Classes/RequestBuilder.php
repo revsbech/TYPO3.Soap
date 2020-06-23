@@ -22,6 +22,7 @@ namespace TYPO3\Soap;
  *                                                                        */
 
 use Doctrine\ORM\Mapping as ORM;
+use Neos\Flow\Http\BaseUriProvider;
 use Neos\Flow\Annotations as Flow;
 
 /**
@@ -33,7 +34,7 @@ class RequestBuilder {
 
 	/**
 	 * @Flow\Inject
-	 * @var \Neos\Flow\Object\ObjectManagerInterface
+	 * @var \Neos\Flow\ObjectManagement\ObjectManagerInterface
 	 */
 	protected $objectManager;
 
@@ -41,6 +42,12 @@ class RequestBuilder {
 	 * @var array
 	 */
 	protected $settings = array();
+
+	/**
+	 * @Flow\Inject
+	 * @var BaseUriProvider
+	 */
+	protected $baseUriProvider;
 
 	/**
 	 * @var array
@@ -68,13 +75,13 @@ class RequestBuilder {
 	 * Parses the endpoint URI found in the current HTTP request and resolves the
 	 * responsible service object name accordingly.
 	 *
-	 * @param \Neos\Flow\Http\Request $httpRequest
+	 * @param \GuzzleHttp\Psr7\Request $httpRequest
 	 * @return \TYPO3\Soap\Request The request object or FALSE if the service object name could not be resolved
 	 */
-	public function build(\Neos\Flow\Http\Request $httpRequest) {
-		$payload = html_entity_decode($httpRequest->getContent());
+	public function build(\GuzzleHttp\Psr7\Request $httpRequest) {
+		$payload = html_entity_decode($httpRequest->getBody());
 		$requestUri = $httpRequest->getUri();
-		$baseUri = $httpRequest->getBaseUri();
+		$baseUri = $this->baseUriProvider->getConfiguredBaseUriOrFallbackToCurrentRequest();
 
 		$servicePath = $this->servicePathForRequestUri($requestUri);
 		$serviceObjectName = $this->serviceObjectNameForServicePath($servicePath);

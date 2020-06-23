@@ -1,6 +1,6 @@
 <?php
 namespace TYPO3\Soap\Tests\Functional;
-
+use Neos\Utility;
 /*                                                                        *
  * This script belongs to the Flow package "TYPO3.Soap".                  *
  *                                                                        *
@@ -34,7 +34,7 @@ class WsdlGeneratorTest extends \Neos\Flow\Tests\FunctionalTestCase {
 
 		$wsdl = $wsdlGenerator->generateWsdl('TYPO3\Soap\Tests\Functional\Fixtures\TestService');
 
-		$wsdlFixture = \Neos\Flow\Utility\Files::getFileContents(__DIR__ . '/Fixtures/TestService.wsdl', FILE_TEXT);
+		$wsdlFixture = Utility\Files::getFileContents(__DIR__ . '/Fixtures/TestService.wsdl', FILE_TEXT);
 
 			// Clean whitespace and linebreaks for better comparison and diff
 		$wsdl = preg_replace('/>\\s*</', ">\n<", $wsdl);

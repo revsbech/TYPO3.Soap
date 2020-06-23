@@ -23,7 +23,7 @@ namespace TYPO3\Soap\Http;
 
 use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Http\Component\ComponentContext;
-use Neos\Flow\Http\Request;
+use GuzzleHttp\Psr7\Request;
 use Neos\Flow\Mvc\ActionRequest;
 use TYPO3\Soap\Request as SoapRequest;
 use Neos\Flow\Mvc\DispatchComponent;
@@ -50,7 +50,7 @@ class SoapComponent extends DispatchComponent {
 	protected $requestBuilder;
 
 	/**
-	 * @Flow\Inject(setting="soapResponseContentType")
+	 * @Flow\InjectConfiguration(setting="soapResponseContentType")
 	 * @var string
 	 */
 	protected $responseContentType;
@@ -122,7 +122,7 @@ class SoapComponent extends DispatchComponent {
 		if ($request->getMethod() !== 'POST') {
 			return self::CANHANDLEREQUEST_NOPOSTREQUEST;
 		}
-		if (!$request->getHeaders()->has('Soapaction')) {
+		if (!array_key_exists('Soapaction', $request->getHeaders())) {
 			return self::CANHANDLEREQUEST_NOSOAPACTION;
 		}
 		return self::CANHANDLEREQUEST_OK;

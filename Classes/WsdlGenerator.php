@@ -23,6 +23,8 @@ namespace TYPO3\Soap;
 
 use Doctrine\ORM\Mapping as ORM;
 use Neos\Flow\Annotations as Flow;
+use Neos\Utility;
+use TYPO3Fluid\Fluid\View\TemplateView;
 
 /**
  * Dynamic WSDL Generator using reflection
@@ -31,7 +33,7 @@ class WsdlGenerator {
 
 	/**
 	 * @Flow\Inject
-	 * @var \Neos\Flow\Object\ObjectManagerInterface
+	 * @var \Neos\Flow\ObjectManagement\ObjectManagerInterface
 	 */
 	protected $objectManager;
 
@@ -43,7 +45,7 @@ class WsdlGenerator {
 
 	/**
 	 * @Flow\Inject
-	 * @var \TYPO3\Fluid\Core\Parser\TemplateParser
+	 * @var \TYPO3Fluid\Fluid\Core\Parser\TemplateParser
 	 */
 	protected $templateParser;
 
@@ -56,6 +58,12 @@ class WsdlGenerator {
 	 * @var array
 	 */
 	protected $complexTypes;
+
+	/**
+	 * @Flow\Inject
+	 * @var TemplateView
+	 */
+	protected $view;
 
 	/**
 	 * Default map of primitive PHP types to XSD schema types
@@ -111,7 +119,6 @@ class WsdlGenerator {
 			$servicePath = $this->getServicePath($className);
 			$namespace = 'http://tempuri.org/' . $servicePath;
 		}
-
 		$schema = $this->reflectOperations($className);
 
 		$viewVariables = array_merge($schema, array(
@@ -342,12 +349,14 @@ class WsdlGenerator {
 	 * @return string
 	 */
 	protected function renderTemplate($templatePathAndFilename, array $contextVariables) {
-		$templateSource = \Neos\Flow\Utility\Files::getFileContents($templatePathAndFilename, FILE_TEXT);
+		$templateSource = Utility\Files::getFileContents($templatePathAndFilename, FILE_TEXT);
 		if ($templateSource === FALSE) {
-			throw new \TYPO3\Fluid\Core\Exception('The template file "' . $templatePathAndFilename . '" could not be loaded.', 1225709595);
+			throw new \TYPO3Fluid\Fluid\Core\Exception('The template file "' . $templatePathAndFilename . '" could not be loaded.', 1225709595);
 		}
-		$parsedTemplate = $this->templateParser->parse($templateSource);
 		$renderingContext = $this->buildRenderingContext($contextVariables);
+		$this->templateParser->setRenderingContext($renderingContext);
+		$parsedTemplate = $this->templateParser->parse($templateSource);
+		die('e');
 		return $parsedTemplate->render($renderingContext);
 	}
 
@@ -355,12 +364,11 @@ class WsdlGenerator {
 	 * Build the rendering context
 	 *
 	 * @param array $contextVariables
-	 * @return \TYPO3\Fluid\Core\Rendering\RenderingContextInterface
+	 * @return \TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface
 	 */
 	protected function buildRenderingContext(array $contextVariables) {
-		$renderingContext = new \TYPO3\Fluid\Core\Rendering\RenderingContext();
-		$renderingContext->injectTemplateVariableContainer(new \TYPO3\Fluid\Core\ViewHelper\TemplateVariableContainer($contextVariables));
-		$renderingContext->injectViewHelperVariableContainer(new \TYPO3\Fluid\Core\ViewHelper\ViewHelperVariableContainer());
+		$renderingContext = new \Neos\FluidAdaptor\Core\Rendering\RenderingContext($this->view);
+		$renderingContext->setViewHelperVariableContainer(new \TYPO3Fluid\Fluid\Core\ViewHelper\ViewHelperVariableContainer());
 		return $renderingContext;
 	}
 

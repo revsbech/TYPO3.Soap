@@ -20,12 +20,12 @@ namespace TYPO3\Soap;
  *                                                                        *
  * The TYPO3 project - inspiring people to share!                         *
  *                                                                        */
-use Neos\Flow\Http\Uri;
+use GuzzleHttp\Psr7\Uri;
 
 /**
  * A SOAP request
  */
-class Request extends \Neos\Flow\Http\Request {
+class Request extends \GuzzleHttp\Psr7\Request {
 
 	/**
 	 * The fully qualified object name of the service this request refers to

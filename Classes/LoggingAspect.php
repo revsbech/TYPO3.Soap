@@ -32,7 +32,7 @@ class LoggingAspect {
 
 	/**
 	 * @Flow\Inject
-	 * @var \Neos\Flow\Log\SystemLoggerInterface
+	 * @var \Psr\Log\LoggerInterface
 	 */
 	protected $systemLogger;
 

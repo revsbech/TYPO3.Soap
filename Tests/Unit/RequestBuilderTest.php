@@ -21,7 +21,7 @@ namespace TYPO3\Soap\Tests\Unit;
  * The TYPO3 project - inspiring people to share!                         *
  *                                                                        */
 
-use Neos\Flow\Reflection\ObjectAccess;
+use Neos\Utility\ObjectAccess;
 
 /**
  * Unit test for RequestBuilder
@@ -32,7 +32,7 @@ class RequestBuilderTest extends \Neos\Flow\Tests\UnitTestCase {
 	 * @test
 	 */
 	public function buildGetsServiceObjectNameFromUrl() {
-		$mockObjectManager = $this->getMock('Neos\Flow\Object\ObjectManagerInterface', array(), array(), '', FALSE);
+		$mockObjectManager = $this->getMock('Neos\Flow\ObjectManagement\ObjectManagerInterface', array(), array(), '', FALSE);
 		$requestBuilder = new \TYPO3\Soap\RequestBuilder();
 		ObjectAccess::setProperty($requestBuilder, 'objectManager', $mockObjectManager, TRUE);
 
@@ -55,7 +55,7 @@ class RequestBuilderTest extends \Neos\Flow\Tests\UnitTestCase {
 	 * @test
 	 */
 	public function buildUsesBaseUrlForWsdlUri() {
-		$mockObjectManager = $this->getMock('Neos\Flow\Object\ObjectManagerInterface', array(), array(), '', FALSE);
+		$mockObjectManager = $this->getMock('Neos\Flow\ObjectManagement\ObjectManagerInterface', array(), array(), '', FALSE);
 		$requestBuilder = new \TYPO3\Soap\RequestBuilder();
 		ObjectAccess::setProperty($requestBuilder, 'objectManager', $mockObjectManager, TRUE);
 

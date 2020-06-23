@@ -20,7 +20,7 @@ namespace TYPO3\Soap\Tests\Unit;
  *                                                                        *
  * The TYPO3 project - inspiring people to share!                         *
  *                                                                        */
-use Neos\Flow\Reflection\ObjectAccess;
+use Neos\Utility\ObjectAccess;
 
 /**
  * Unit test for ServiceWrapper
@@ -48,7 +48,7 @@ class ServiceWrapperTest extends \Neos\Flow\Tests\UnitTestCase {
 	protected $mockPropertyMapper;
 
 	/**
-	 * @var \Neos\Flow\Object\ObjectManagerInterface
+	 * @var \Neos\Flow\ObjectManagement\ObjectManagerInterface
 	 */
 	protected $mockObjectManager;
 
@@ -89,7 +89,7 @@ class ServiceWrapperTest extends \Neos\Flow\Tests\UnitTestCase {
 			->getMock();
 		$this->mockReflectionService = $this->buildMockReflectionServiceForTestService();
 		$this->mockPropertyMapper = $this->getMock('Neos\Flow\Property\PropertyMapper');
-		$this->mockObjectManager = $this->getMock('Neos\Flow\Object\ObjectManagerInterface');
+		$this->mockObjectManager = $this->getMock('Neos\Flow\ObjectManagement\ObjectManagerInterface');
 		$this->serviceWrapper = $this->getMock('TYPO3\Soap\ServiceWrapper', array('initializeCall', 'convertStdClassToObject'), array($this->mockService));
 		$this->serviceWrapper->setRequest($this->mockRequest);
 		$this->inject($this->serviceWrapper, 'reflectionService', $this->mockReflectionService, TRUE);

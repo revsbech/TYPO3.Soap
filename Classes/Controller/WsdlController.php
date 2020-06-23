@@ -41,7 +41,7 @@ class WsdlController extends \Neos\Flow\Mvc\Controller\ActionController {
 	protected $pathToObjectNameMapping;
 
 	/**
-	 * @Flow\Inject(setting="wsdlResponseContentType")
+	 * @Flow\InjectConfiguration(setting="wsdlResponseContentType")
 	 * @var string
 	 */
 	protected $responseContentType;

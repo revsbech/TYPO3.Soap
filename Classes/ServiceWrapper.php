@@ -23,14 +23,13 @@ namespace TYPO3\Soap;
 
 use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Exception;
-use Neos\Flow\Log\SystemLoggerInterface;
-use Neos\Flow\Object\ObjectManagerInterface;
+use Psr\Log\LoggerInterface;
+use Neos\Flow\ObjectManagement\ObjectManagerInterface;
 use Neos\Flow\Property\PropertyMapper;
-use Neos\Flow\Property\PropertyMappingConfigurationBuilder;
 use Neos\Flow\Reflection\ReflectionService;
 use Neos\Flow\Security\Exception\AccessDeniedException;
 use Neos\Flow\Security\Exception\AuthenticationRequiredException;
-use Neos\Flow\Utility\Arrays;
+use Neos\Utility\Arrays;
 
 /**
  * A wrapper for services to map arguments and handle exceptions in a
@@ -59,19 +58,13 @@ class ServiceWrapper {
 
 	/**
 	 * @Flow\Inject
-	 * @var PropertyMappingConfigurationBuilder
-	 */
-	protected $propertyConfigurationBuilder;
-
-	/**
-	 * @Flow\Inject
 	 * @var ObjectManagerInterface
 	 */
 	protected $objectManager;
 
 	/**
 	 * @Flow\Inject
-	 * @var SystemLoggerInterface
+	 * @var LoggerInterface
 	 */
 	protected $systemLogger;
 
@@ -306,7 +299,7 @@ class ServiceWrapper {
 	protected function convertStdClassToObject($argument, $className, $parameterName) {
 		$source = Arrays::convertObjectToArray($argument);
 
-		$propertyConfiguration = $this->propertyConfigurationBuilder->build();
+		$propertyConfiguration = $this->propertyMapper->buildPropertyMappingConfiguration();
 		foreach ($source as $propertyName => $propertyValue) {
 			$annotation = $this->getMethodReturnAnnotation($className, 'get' . ucfirst($propertyName));
 			$propertyType = $annotation['type'];
