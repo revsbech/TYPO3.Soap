@@ -1,6 +1,6 @@
 {
 	"name": "typo3/soap",
-	"type": "neos-flow-package",
+	"type": "neos-package",
 	"description": "This package enables Flow applications to serve TYPO3.Soap webservices. It features full integration into the framework with automatic property mapping and automatic WSDL generation for service description.",
 	"require": {
 		"neos/flow": "~6.0"
