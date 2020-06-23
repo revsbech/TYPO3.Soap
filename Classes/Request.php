@@ -25,7 +25,7 @@ use GuzzleHttp\Psr7\Uri;
 /**
  * A SOAP request
  */
-class Request extends \GuzzleHttp\Psr7\Request {
+class Request extends \GuzzleHttp\Psr7\ServerRequest {
 
 	/**
 	 * The fully qualified object name of the service this request refers to

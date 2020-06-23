@@ -23,6 +23,7 @@ namespace TYPO3\Soap\Controller;
 
 use Doctrine\ORM\Mapping as ORM;
 use Neos\Flow\Annotations as Flow;
+use Neos\Flow\Http\BaseUriProvider;
 
 /**
  * A controller to serve static or generated WSDL
@@ -41,10 +42,10 @@ class WsdlController extends \Neos\Flow\Mvc\Controller\ActionController {
 	protected $pathToObjectNameMapping;
 
 	/**
-	 * @Flow\InjectConfiguration(setting="wsdlResponseContentType")
-	 * @var string
+	 * @Flow\Inject
+	 * @var BaseUriProvider
 	 */
-	protected $responseContentType;
+	protected $baseUriProvider;
 
 	/**
 	 * Initialize mappings
@@ -87,16 +88,17 @@ class WsdlController extends \Neos\Flow\Mvc\Controller\ActionController {
 			$serviceObjectName = $this->objectManager->getCaseSensitiveObjectName($serviceObjectName);
 
 			if ($serviceObjectName === FALSE) {
-				$this->response->setStatus(404);
+				$this->response->setStatusCode(404);
 				return '404 Not Found (No WSDL resource found at this URI)';
 			}
 
 			$wsdlContent = $this->wsdlGenerator->generateWsdl($serviceObjectName);
 		}
 
-		$this->response->setHeader('Content-type', $this->responseContentType);
-		$wsdlContent = str_replace('{baseUrl}', $this->request->getHttpRequest()->getBaseUri(), $wsdlContent);
-		return $wsdlContent;
+		$this->response->setContentType($this->settings['wsdlResponseContentType']);
+		$baseUri = $this->baseUriProvider->getConfiguredBaseUriOrFallbackToCurrentRequest();
+		$wsdlContent = str_replace('[baseUrl]', $baseUri, $wsdlContent);
+		return html_entity_decode($wsdlContent);
 	}
 }
 

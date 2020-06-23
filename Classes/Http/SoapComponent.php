@@ -55,6 +55,18 @@ class SoapComponent extends DispatchComponent {
 	 */
 	protected $responseContentType;
 
+    /**
+     * @Flow\Inject
+     * @var \Neos\Flow\ObjectManagement\ObjectManagerInterface
+     */
+    protected $objectManager;
+
+    /**
+     * @Flow\Inject
+     * @var \Neos\Flow\Security\Context
+     */
+    protected $securityContext;
+
 	/**
 	 * @param ComponentContext $componentContext
 	 * @return void
@@ -90,8 +102,7 @@ class SoapComponent extends DispatchComponent {
 			'cache_wsdl' => WSDL_CACHE_MEMORY
 		);
 
-		/** @var $actionRequest ActionRequest */
-		$actionRequest = $this->objectManager->get('Neos\Flow\Mvc\ActionRequest', $request);
+        $actionRequest = ActionRequest::fromHttpRequest($request);
 		$this->securityContext->setRequest($actionRequest);
 
 		$soapServer = new SoapServer((string)$request->getWsdlUri(), $serverOptions);

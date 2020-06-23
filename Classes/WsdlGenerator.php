@@ -23,6 +23,7 @@ namespace TYPO3\Soap;
 
 use Doctrine\ORM\Mapping as ORM;
 use Neos\Flow\Annotations as Flow;
+use Neos\FluidAdaptor\View\StandaloneView;
 use Neos\Utility;
 use TYPO3Fluid\Fluid\View\TemplateView;
 
@@ -349,27 +350,19 @@ class WsdlGenerator {
 	 * @return string
 	 */
 	protected function renderTemplate($templatePathAndFilename, array $contextVariables) {
-		$templateSource = Utility\Files::getFileContents($templatePathAndFilename, FILE_TEXT);
-		if ($templateSource === FALSE) {
-			throw new \TYPO3Fluid\Fluid\Core\Exception('The template file "' . $templatePathAndFilename . '" could not be loaded.', 1225709595);
-		}
-		$renderingContext = $this->buildRenderingContext($contextVariables);
-		$this->templateParser->setRenderingContext($renderingContext);
-		$parsedTemplate = $this->templateParser->parse($templateSource);
-		die('e');
-		return $parsedTemplate->render($renderingContext);
+		$standaloneView = $this->buildRenderingContext($templatePathAndFilename, $contextVariables);
+		return $standaloneView->render();
 	}
 
-	/**
-	 * Build the rendering context
-	 *
-	 * @param array $contextVariables
-	 * @return \TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface
-	 */
-	protected function buildRenderingContext(array $contextVariables) {
-		$renderingContext = new \Neos\FluidAdaptor\Core\Rendering\RenderingContext($this->view);
-		$renderingContext->setViewHelperVariableContainer(new \TYPO3Fluid\Fluid\Core\ViewHelper\ViewHelperVariableContainer());
-		return $renderingContext;
+
+	protected function buildRenderingContext($templatePathAndFilename, array $contextVariables) {
+
+		$standaloneView = new StandaloneView();
+		$standaloneView->assignMultiple($contextVariables);
+		$standaloneView->setFormat('xml');
+		$standaloneView->setTemplatePathAndFilename($templatePathAndFilename);
+
+		return $standaloneView;
 	}
 
 }

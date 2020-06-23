@@ -86,13 +86,13 @@ class RequestBuilder {
 		$servicePath = $this->servicePathForRequestUri($requestUri);
 		$serviceObjectName = $this->serviceObjectNameForServicePath($servicePath);
 
-		$wsdlUri = clone $baseUri;
-		$wsdlUri->setPath($requestUri->getPath() . '.wsdl');
+//		$wsdlUri = clone $baseUri;
+//		$wsdlUri->setPath($requestUri->getPath() . '.wsdl');
 
-		$request = \TYPO3\Soap\Request::create($requestUri, 'POST');
+		$request = new \TYPO3\Soap\Request('POST', $requestUri);
 		$request->setServiceObjectName($serviceObjectName);
 		$request->setBaseUri($baseUri);
-		$request->setWsdlUri($wsdlUri);
+		$request->setWsdlUri($baseUri);
 		$request->setBody($payload);
 		return $request;
 	}
