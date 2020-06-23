@@ -21,18 +21,18 @@ namespace TYPO3\Soap\Tests\Unit;
  * The TYPO3 project - inspiring people to share!                         *
  *                                                                        */
 
-use TYPO3\Flow\Reflection\ObjectAccess;
+use Neos\Flow\Reflection\ObjectAccess;
 
 /**
  * Unit test for RequestBuilder
  */
-class RequestBuilderTest extends \TYPO3\Flow\Tests\UnitTestCase {
+class RequestBuilderTest extends \Neos\Flow\Tests\UnitTestCase {
 
 	/**
 	 * @test
 	 */
 	public function buildGetsServiceObjectNameFromUrl() {
-		$mockObjectManager = $this->getMock('TYPO3\Flow\Object\ObjectManagerInterface', array(), array(), '', FALSE);
+		$mockObjectManager = $this->getMock('Neos\Flow\Object\ObjectManagerInterface', array(), array(), '', FALSE);
 		$requestBuilder = new \TYPO3\Soap\RequestBuilder();
 		ObjectAccess::setProperty($requestBuilder, 'objectManager', $mockObjectManager, TRUE);
 
@@ -41,8 +41,8 @@ class RequestBuilderTest extends \TYPO3\Flow\Tests\UnitTestCase {
 		);
 		$requestBuilder->injectSettings($settings);
 
-		$httpRequest = \TYPO3\Flow\Http\Request::create(new \TYPO3\Flow\Http\Uri('http://request-host/service/soap/testing/v1/test'), 'POST');
-		ObjectAccess::setProperty($httpRequest, 'baseUri', new \TYPO3\Flow\Http\Uri('https://very-different/'), TRUE);
+		$httpRequest = \Neos\Flow\Http\Request::create(new \Neos\Flow\Http\Uri('http://request-host/service/soap/testing/v1/test'), 'POST');
+		ObjectAccess::setProperty($httpRequest, 'baseUri', new \Neos\Flow\Http\Uri('https://very-different/'), TRUE);
 
 		$mockObjectManager->expects($this->atLeastOnce())->method('getCaseSensitiveObjectName')->with('testing\Service\Soap\v1\testService')->will($this->returnValue('Testing\Service\Soap\V1\TestService'));
 
@@ -55,7 +55,7 @@ class RequestBuilderTest extends \TYPO3\Flow\Tests\UnitTestCase {
 	 * @test
 	 */
 	public function buildUsesBaseUrlForWsdlUri() {
-		$mockObjectManager = $this->getMock('TYPO3\Flow\Object\ObjectManagerInterface', array(), array(), '', FALSE);
+		$mockObjectManager = $this->getMock('Neos\Flow\Object\ObjectManagerInterface', array(), array(), '', FALSE);
 		$requestBuilder = new \TYPO3\Soap\RequestBuilder();
 		ObjectAccess::setProperty($requestBuilder, 'objectManager', $mockObjectManager, TRUE);
 
@@ -64,8 +64,8 @@ class RequestBuilderTest extends \TYPO3\Flow\Tests\UnitTestCase {
 		);
 		$requestBuilder->injectSettings($settings);
 
-		$httpRequest = \TYPO3\Flow\Http\Request::create(new \TYPO3\Flow\Http\Uri('http://request-host/service/soap/testing/v1/test'), 'POST');
-		ObjectAccess::setProperty($httpRequest, 'baseUri', new \TYPO3\Flow\Http\Uri('https://very-different/'), TRUE);
+		$httpRequest = \Neos\Flow\Http\Request::create(new \Neos\Flow\Http\Uri('http://request-host/service/soap/testing/v1/test'), 'POST');
+		ObjectAccess::setProperty($httpRequest, 'baseUri', new \Neos\Flow\Http\Uri('https://very-different/'), TRUE);
 
 		$mockObjectManager->expects($this->any())->method('getCaseSensitiveObjectName')->with('testing\Service\Soap\v1\testService')->will($this->returnValue('Testing\Service\Soap\V1\TestService'));
 

@@ -24,7 +24,7 @@ namespace TYPO3\Soap;
 /**
  * An exception for invalid SOAP requests (should translate to a client SOAP fault)
  */
-class InvalidSoapRequestException extends \TYPO3\Flow\Exception {
+class InvalidSoapRequestException extends \Neos\Flow\Exception {
 
 }
 ?>

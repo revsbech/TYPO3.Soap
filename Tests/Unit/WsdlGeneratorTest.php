@@ -24,11 +24,11 @@ namespace TYPO3\Soap\Tests\Unit;
 /**
  * Unit test for WsdlGenerator
  */
-class WsdlGeneratorTest extends \TYPO3\Flow\Tests\UnitTestCase {
+class WsdlGeneratorTest extends \Neos\Flow\Tests\UnitTestCase {
 
 	/**
 	 * @test
-	 * @expectedException \TYPO3\Flow\Exception
+	 * @expectedException \Neos\Flow\Exception
 	 */
 	public function generateWsdlAcceptsOnlyClassNamesWithServiceSuffix() {
 		$wsdlGenerator = new \TYPO3\Soap\WsdlGenerator();
@@ -37,14 +37,14 @@ class WsdlGeneratorTest extends \TYPO3\Flow\Tests\UnitTestCase {
 
 	/**
 	 * @test
-	 * @expectedException \TYPO3\Flow\Exception
+	 * @expectedException \Neos\Flow\Exception
 	 */
 	public function generateWsdlAcceptsOnlyReflectedClassNames() {
-		$mockReflectionService = $this->getMock('TYPO3\Flow\Reflection\ReflectionService');
+		$mockReflectionService = $this->getMock('Neos\Flow\Reflection\ReflectionService');
 		$mockReflectionService->expects($this->any())->method('isClassReflected')->will($this->returnValue(FALSE));
 
 		$wsdlGenerator = new \TYPO3\Soap\WsdlGenerator();
-		\TYPO3\Flow\Reflection\ObjectAccess::setProperty($wsdlGenerator, 'reflectionService', $mockReflectionService, TRUE);
+		\Neos\Flow\Reflection\ObjectAccess::setProperty($wsdlGenerator, 'reflectionService', $mockReflectionService, TRUE);
 
 		$wsdlGenerator->generateWsdl('TYPO3\Soap\Tests\Unit\Fixtures\MyUnknownService');
 	}
@@ -53,15 +53,15 @@ class WsdlGeneratorTest extends \TYPO3\Flow\Tests\UnitTestCase {
 	 * @test
 	 */
 	public function generateWsdlReflectsOperationsAndRendersTemplate() {
-		$mockReflectionService = $this->getMock('TYPO3\Flow\Reflection\ReflectionService');
+		$mockReflectionService = $this->getMock('Neos\Flow\Reflection\ReflectionService');
 		$mockReflectionService->expects($this->any())->method('isClassReflected')->will($this->returnValue(TRUE));
 
-		$mockObjectManager = $this->getMock('TYPO3\Flow\Object\ObjectManagerInterface');
+		$mockObjectManager = $this->getMock('Neos\Flow\Object\ObjectManagerInterface');
 		$mockObjectManager->expects($this->any())->method('getPackageKeyByObjectName')->will($this->returnValue('TYPO3.Soap'));
 
 		$wsdlGenerator = $this->getMock('TYPO3\Soap\WsdlGenerator', array('reflectOperations', 'renderTemplate'));
-		\TYPO3\Flow\Reflection\ObjectAccess::setProperty($wsdlGenerator, 'reflectionService', $mockReflectionService, TRUE);
-		\TYPO3\Flow\Reflection\ObjectAccess::setProperty($wsdlGenerator, 'objectManager', $mockObjectManager, TRUE);
+		\Neos\Flow\Reflection\ObjectAccess::setProperty($wsdlGenerator, 'reflectionService', $mockReflectionService, TRUE);
+		\Neos\Flow\Reflection\ObjectAccess::setProperty($wsdlGenerator, 'objectManager', $mockObjectManager, TRUE);
 		$wsdlGenerator->injectSettings(array(
 			'endpointUriBasePath' => 'service/soap/',
 			'generatorTemplate' => 'resource://TYPO3.Soap/Private/Templates/Definitions.xml'
@@ -91,7 +91,7 @@ class WsdlGeneratorTest extends \TYPO3\Flow\Tests\UnitTestCase {
 		$mockReflectionService = $this->buildMockReflectionServiceForTestService();
 
 		$wsdlGenerator = new \TYPO3\Soap\WsdlGenerator();
-		\TYPO3\Flow\Reflection\ObjectAccess::setProperty($wsdlGenerator, 'reflectionService', $mockReflectionService, TRUE);
+		\Neos\Flow\Reflection\ObjectAccess::setProperty($wsdlGenerator, 'reflectionService', $mockReflectionService, TRUE);
 
 		$schema = $wsdlGenerator->reflectOperations('TYPO3\Soap\Tests\Unit\Fixtures\MyService');
 		$this->assertEquals(array(
@@ -113,7 +113,7 @@ class WsdlGeneratorTest extends \TYPO3\Flow\Tests\UnitTestCase {
 		$mockReflectionService = $this->buildMockReflectionServiceForTestService();
 
 		$wsdlGenerator = $this->getMock('TYPO3\Soap\WsdlGenerator', array('dummy'));
-		\TYPO3\Flow\Reflection\ObjectAccess::setProperty($wsdlGenerator, 'reflectionService', $mockReflectionService, TRUE);
+		\Neos\Flow\Reflection\ObjectAccess::setProperty($wsdlGenerator, 'reflectionService', $mockReflectionService, TRUE);
 
 		$schema = $wsdlGenerator->reflectOperations('TYPO3\Soap\Tests\Unit\Fixtures\MyService');
 		$this->assertEquals(array(
@@ -172,7 +172,7 @@ class WsdlGeneratorTest extends \TYPO3\Flow\Tests\UnitTestCase {
 		$mockReflectionService = $this->buildMockReflectionServiceForTestService();
 
 		$wsdlGenerator = $this->getMock('TYPO3\Soap\WsdlGenerator', array('dummy'));
-		\TYPO3\Flow\Reflection\ObjectAccess::setProperty($wsdlGenerator, 'reflectionService', $mockReflectionService, TRUE);
+		\Neos\Flow\Reflection\ObjectAccess::setProperty($wsdlGenerator, 'reflectionService', $mockReflectionService, TRUE);
 
 		$schema = $wsdlGenerator->reflectOperations('TYPO3\Soap\Tests\Unit\Fixtures\MyService');
 		$this->assertEquals(array(
@@ -213,10 +213,10 @@ class WsdlGeneratorTest extends \TYPO3\Flow\Tests\UnitTestCase {
 
 	/**
 	 *
-	 * @return \TYPO3\Flow\Reflection\ReflectionService
+	 * @return \Neos\Flow\Reflection\ReflectionService
 	 */
 	protected function buildMockReflectionServiceForTestService() {
-		$mockReflectionService = $this->getMock('TYPO3\Flow\Reflection\ReflectionService');
+		$mockReflectionService = $this->getMock('Neos\Flow\Reflection\ReflectionService');
 		$mockReflectionService->expects($this->any())->method('isClassReflected')->will($this->returnValue(TRUE));
 		$mockReflectionService->expects($this->any())->method('getClassMethodNames')->will($this->returnCallback(
 			function($className) {

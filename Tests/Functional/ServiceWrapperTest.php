@@ -25,10 +25,10 @@ use TYPO3\Soap\ServiceWrapper;
 /**
  * Testcase for the Service Wrapper
  */
-class ServiceWrapperTest extends \TYPO3\Flow\Tests\FunctionalTestCase {
+class ServiceWrapperTest extends \Neos\Flow\Tests\FunctionalTestCase {
 
 	/**
-	 * @var \TYPO3\Flow\Property\PropertyMapper
+	 * @var \Neos\Flow\Property\PropertyMapper
 	 */
 	protected $propertyMapper;
 
@@ -70,7 +70,7 @@ class ServiceWrapperTest extends \TYPO3\Flow\Tests\FunctionalTestCase {
 	 * @test
 	 */
 	public function mapperMapsToClassName() {
-		$this->propertyMapper = $this->objectManager->get('TYPO3\Flow\Property\PropertyMapper');
+		$this->propertyMapper = $this->objectManager->get('Neos\Flow\Property\PropertyMapper');
 		$value = array('name' => 'Foo', 'size' => 2);
 		$type = 'TYPO3\Soap\Tests\Functional\Fixtures\Dto';
 		$target = $this->propertyMapper->convert($value, $type);

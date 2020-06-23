@@ -24,6 +24,6 @@ namespace TYPO3\Soap\Tests\Functional\Fixtures;
 /**
  * A sample exception
  */
-class PingException extends \TYPO3\Flow\Exception {
+class PingException extends \Neos\Flow\Exception {
 }
 ?>

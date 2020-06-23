@@ -22,7 +22,7 @@ namespace TYPO3\Soap\Tests\Functional\Fixtures;
  *                                                                        */
 
 use Doctrine\ORM\Mapping as ORM;
-use TYPO3\Flow\Annotations as Flow;
+use Neos\Flow\Annotations as Flow;
 
 /**
  * A sample DTO

@@ -35,7 +35,7 @@ class TestService {
 	 */
 	public function ping($value) {
 		if ($value === 'throw') {
-			throw new \TYPO3\Flow\Exception('Some exception occured', 1305541506);
+			throw new \Neos\Flow\Exception('Some exception occured', 1305541506);
 		}
 		if ($value === 'invalid') {
 			throw new PingException('Some expected exception occured', 1312964667);

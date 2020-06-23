@@ -20,12 +20,12 @@ namespace TYPO3\Soap\Tests\Unit;
  *                                                                        *
  * The TYPO3 project - inspiring people to share!                         *
  *                                                                        */
-use TYPO3\Flow\Reflection\ObjectAccess;
+use Neos\Flow\Reflection\ObjectAccess;
 
 /**
  * Unit test for ServiceWrapper
  */
-class ServiceWrapperTest extends \TYPO3\Flow\Tests\UnitTestCase {
+class ServiceWrapperTest extends \Neos\Flow\Tests\UnitTestCase {
 
 	/**
 	 * @var object
@@ -38,17 +38,17 @@ class ServiceWrapperTest extends \TYPO3\Flow\Tests\UnitTestCase {
 	protected $mockRequest;
 
 	/**
-	 * @var \TYPO3\Flow\Reflection\ReflectionService
+	 * @var \Neos\Flow\Reflection\ReflectionService
 	 */
 	protected $mockReflectionService;
 
 	/**
-	 * @var \TYPO3\Flow\Property\PropertyMapper
+	 * @var \Neos\Flow\Property\PropertyMapper
 	 */
 	protected $mockPropertyMapper;
 
 	/**
-	 * @var \TYPO3\Flow\Object\ObjectManagerInterface
+	 * @var \Neos\Flow\Object\ObjectManagerInterface
 	 */
 	protected $mockObjectManager;
 
@@ -88,8 +88,8 @@ class ServiceWrapperTest extends \TYPO3\Flow\Tests\UnitTestCase {
 			->disableOriginalConstructor()
 			->getMock();
 		$this->mockReflectionService = $this->buildMockReflectionServiceForTestService();
-		$this->mockPropertyMapper = $this->getMock('TYPO3\Flow\Property\PropertyMapper');
-		$this->mockObjectManager = $this->getMock('TYPO3\Flow\Object\ObjectManagerInterface');
+		$this->mockPropertyMapper = $this->getMock('Neos\Flow\Property\PropertyMapper');
+		$this->mockObjectManager = $this->getMock('Neos\Flow\Object\ObjectManagerInterface');
 		$this->serviceWrapper = $this->getMock('TYPO3\Soap\ServiceWrapper', array('initializeCall', 'convertStdClassToObject'), array($this->mockService));
 		$this->serviceWrapper->setRequest($this->mockRequest);
 		$this->inject($this->serviceWrapper, 'reflectionService', $this->mockReflectionService, TRUE);
@@ -186,10 +186,10 @@ class ServiceWrapperTest extends \TYPO3\Flow\Tests\UnitTestCase {
 	}
 
 	/**
-	 * @return \TYPO3\Flow\Reflection\ReflectionService
+	 * @return \Neos\Flow\Reflection\ReflectionService
 	 */
 	protected function buildMockReflectionServiceForTestService() {
-		$mockReflectionService = $this->getMock('TYPO3\Flow\Reflection\ReflectionService');
+		$mockReflectionService = $this->getMock('Neos\Flow\Reflection\ReflectionService');
 		$mockReflectionService->expects($this->any())->method('isClassReflected')->will($this->returnCallback(
 			function($className) {
 				switch ($className) {

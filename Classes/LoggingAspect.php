@@ -21,7 +21,7 @@ namespace TYPO3\Soap;
  * The TYPO3 project - inspiring people to share!                         *
  *                                                                        */
 
-use TYPO3\Flow\Annotations as Flow;
+use Neos\Flow\Annotations as Flow;
 
 /**
  * A logging aspect
@@ -32,18 +32,18 @@ class LoggingAspect {
 
 	/**
 	 * @Flow\Inject
-	 * @var \TYPO3\Flow\Log\SystemLoggerInterface
+	 * @var \Neos\Flow\Log\SystemLoggerInterface
 	 */
 	protected $systemLogger;
 
 	/**
 	 * Advice for logging calls of the request handler's canHandleRequest() method.
 	 *
-	 * @param \TYPO3\Flow\Aop\JoinPointInterface
+	 * @param \Neos\Flow\Aop\JoinPointInterface
 	 * @return void
 	 * @Flow\After("setting(TYPO3.Soap.logRequests) && method(TYPO3\Soap\RequestHandler->canHandleRequest())")
 	 */
-	public function logCanHandleRequestCalls(\TYPO3\Flow\Aop\JoinPointInterface $joinPoint) {
+	public function logCanHandleRequestCalls(\Neos\Flow\Aop\JoinPointInterface $joinPoint) {
 		switch ($joinPoint->getResult()) {
 			case \TYPO3\Soap\RequestHandler::CANHANDLEREQUEST_OK :
 				$message = 'Detected HTTP POST request at valid endpoint URI.';
@@ -66,22 +66,22 @@ class LoggingAspect {
 	/**
 	 * Advice for logging handleRequest() calls
 	 *
-	 * @param \TYPO3\Flow\Aop\JoinPointInterface
+	 * @param \Neos\Flow\Aop\JoinPointInterface
 	 * @return void
 	 * @Flow\Before("setting(TYPO3.Soap.logRequests) && method(TYPO3\Soap\RequestHandler->handleRequest())")
 	 */
-	public function logBeforeHandleRequestCalls(\TYPO3\Flow\Aop\JoinPointInterface $joinPoint) {
+	public function logBeforeHandleRequestCalls(\Neos\Flow\Aop\JoinPointInterface $joinPoint) {
 		$this->systemLogger->log('Handling SOAP request.', LOG_DEBUG);
 	}
 
 	/**
 	 * Advice for logging handleRequest() calls
 	 *
-	 * @param \TYPO3\Flow\Aop\JoinPointInterface
+	 * @param \Neos\Flow\Aop\JoinPointInterface
 	 * @return void
 	 * @Flow\After("setting(TYPO3.Soap.logRequests) && method(TYPO3\Soap\RequestHandler->handleRequest())")
 	 */
-	public function logAfterHandleRequestCalls(\TYPO3\Flow\Aop\JoinPointInterface $joinPoint) {
+	public function logAfterHandleRequestCalls(\Neos\Flow\Aop\JoinPointInterface $joinPoint) {
 		$result = $joinPoint->getResult();
 		if ($result instanceof \Exception) {
 			$this->systemLogger->log('handleRequest() exited with exception:' . $result, LOG_ERR);

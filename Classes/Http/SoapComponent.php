@@ -21,12 +21,12 @@ namespace TYPO3\Soap\Http;
  * The TYPO3 project - inspiring people to share!                         *
  *                                                                        */
 
-use TYPO3\Flow\Annotations as Flow;
-use TYPO3\Flow\Http\Component\ComponentContext;
-use TYPO3\Flow\Http\Request;
-use TYPO3\Flow\Mvc\ActionRequest;
+use Neos\Flow\Annotations as Flow;
+use Neos\Flow\Http\Component\ComponentContext;
+use Neos\Flow\Http\Request;
+use Neos\Flow\Mvc\ActionRequest;
 use TYPO3\Soap\Request as SoapRequest;
-use TYPO3\Flow\Mvc\DispatchComponent;
+use Neos\Flow\Mvc\DispatchComponent;
 use TYPO3\Soap\RequestBuilder;
 use TYPO3\Soap\ServiceWrapper;
 use TYPO3\Soap\SoapServer;
@@ -72,7 +72,7 @@ class SoapComponent extends DispatchComponent {
 		$response->setHeader('Content-Type', $this->responseContentType, TRUE);
 		$response->setContent($responseContent);
 
-		$componentContext->setParameter('TYPO3\Flow\Http\Component\ComponentChain', 'cancel', TRUE);
+		$componentContext->setParameter('Neos\Flow\Http\Component\ComponentChain', 'cancel', TRUE);
 	}
 
 	/**
@@ -91,7 +91,7 @@ class SoapComponent extends DispatchComponent {
 		);
 
 		/** @var $actionRequest ActionRequest */
-		$actionRequest = $this->objectManager->get('TYPO3\Flow\Mvc\ActionRequest', $request);
+		$actionRequest = $this->objectManager->get('Neos\Flow\Mvc\ActionRequest', $request);
 		$this->securityContext->setRequest($actionRequest);
 
 		$soapServer = new SoapServer((string)$request->getWsdlUri(), $serverOptions);
@@ -104,7 +104,7 @@ class SoapComponent extends DispatchComponent {
 		$soapServer->setObject($serviceWrapper);
 		$response = $soapServer->handle($request->getBody());
 
-		$this->objectManager->get('TYPO3\Flow\Persistence\PersistenceManagerInterface')->persistAll();
+		$this->objectManager->get('Neos\Flow\Persistence\PersistenceManagerInterface')->persistAll();
 
 		return $response;
 	}

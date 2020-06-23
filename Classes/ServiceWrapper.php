@@ -21,16 +21,16 @@ namespace TYPO3\Soap;
  * The TYPO3 project - inspiring people to share!                         *
  *                                                                        */
 
-use TYPO3\Flow\Annotations as Flow;
-use TYPO3\Flow\Exception;
-use TYPO3\Flow\Log\SystemLoggerInterface;
-use TYPO3\Flow\Object\ObjectManagerInterface;
-use TYPO3\Flow\Property\PropertyMapper;
-use TYPO3\Flow\Property\PropertyMappingConfigurationBuilder;
-use TYPO3\Flow\Reflection\ReflectionService;
-use TYPO3\Flow\Security\Exception\AccessDeniedException;
-use TYPO3\Flow\Security\Exception\AuthenticationRequiredException;
-use TYPO3\Flow\Utility\Arrays;
+use Neos\Flow\Annotations as Flow;
+use Neos\Flow\Exception;
+use Neos\Flow\Log\SystemLoggerInterface;
+use Neos\Flow\Object\ObjectManagerInterface;
+use Neos\Flow\Property\PropertyMapper;
+use Neos\Flow\Property\PropertyMappingConfigurationBuilder;
+use Neos\Flow\Reflection\ReflectionService;
+use Neos\Flow\Security\Exception\AccessDeniedException;
+use Neos\Flow\Security\Exception\AuthenticationRequiredException;
+use Neos\Flow\Utility\Arrays;
 
 /**
  * A wrapper for services to map arguments and handle exceptions in a

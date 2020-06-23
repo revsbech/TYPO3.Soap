@@ -22,12 +22,12 @@ namespace TYPO3\Soap\Controller;
  *                                                                        */
 
 use Doctrine\ORM\Mapping as ORM;
-use TYPO3\Flow\Annotations as Flow;
+use Neos\Flow\Annotations as Flow;
 
 /**
  * A controller to serve static or generated WSDL
  */
-class WsdlController extends \TYPO3\Flow\Mvc\Controller\ActionController {
+class WsdlController extends \Neos\Flow\Mvc\Controller\ActionController {
 
 	/**
 	 * @Flow\Inject

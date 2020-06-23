@@ -22,7 +22,7 @@ namespace TYPO3\Soap;
  *                                                                        */
 
 use Doctrine\ORM\Mapping as ORM;
-use TYPO3\Flow\Annotations as Flow;
+use Neos\Flow\Annotations as Flow;
 
 /**
  * The SOAP request builder
@@ -33,7 +33,7 @@ class RequestBuilder {
 
 	/**
 	 * @Flow\Inject
-	 * @var \TYPO3\Flow\Object\ObjectManagerInterface
+	 * @var \Neos\Flow\Object\ObjectManagerInterface
 	 */
 	protected $objectManager;
 
@@ -68,10 +68,10 @@ class RequestBuilder {
 	 * Parses the endpoint URI found in the current HTTP request and resolves the
 	 * responsible service object name accordingly.
 	 *
-	 * @param \TYPO3\Flow\Http\Request $httpRequest
+	 * @param \Neos\Flow\Http\Request $httpRequest
 	 * @return \TYPO3\Soap\Request The request object or FALSE if the service object name could not be resolved
 	 */
-	public function build(\TYPO3\Flow\Http\Request $httpRequest) {
+	public function build(\Neos\Flow\Http\Request $httpRequest) {
 		$payload = html_entity_decode($httpRequest->getContent());
 		$requestUri = $httpRequest->getUri();
 		$baseUri = $httpRequest->getBaseUri();

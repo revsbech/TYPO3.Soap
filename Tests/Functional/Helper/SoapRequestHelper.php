@@ -21,7 +21,7 @@ namespace TYPO3\Soap\Tests\Functional\Helper;
  * The TYPO3 project - inspiring people to share!                         *
  *                                                                        */
 
-use TYPO3\Flow\Annotations as Flow;
+use Neos\Flow\Annotations as Flow;
 
 /**
  * A helper to test SOAP requests
@@ -40,7 +40,7 @@ class SoapRequestHelper {
 
 	/**
 	 * @Flow\Inject
-	 * @var \TYPO3\Flow\Object\ObjectManagerInterface
+	 * @var \Neos\Flow\Object\ObjectManagerInterface
 	 */
 	protected $objectManager;
 
@@ -59,7 +59,7 @@ class SoapRequestHelper {
 		$testRequestBuilder = new TestRequestBuilder($wsdlUri, $serviceObjectName, $requestBody);
 		$request = $testRequestBuilder->getRequest();
 
-		$securityContext = $this->objectManager->get('TYPO3\Flow\Security\Context');
+		$securityContext = $this->objectManager->get('Neos\Flow\Security\Context');
 		$securityContext->setRequest($request->createActionRequest());
 
 		ob_start();

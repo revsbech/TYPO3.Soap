@@ -24,10 +24,10 @@ namespace TYPO3\Soap;
 /**
  * A mapping exception
  */
-class MappingException extends \TYPO3\Flow\Exception {
+class MappingException extends \Neos\Flow\Exception {
 
 	/**
-	 * @var \TYPO3\Flow\Property\MappingResults
+	 * @var \Neos\Flow\Property\MappingResults
 	 */
 	protected $mappingResults;
 
@@ -35,15 +35,15 @@ class MappingException extends \TYPO3\Flow\Exception {
 	 * Constructs this exception
 	 *
 	 * @param string $message The exception message
-	 * @param \TYPO3\Flow\Property\MappingResults $mappingResults
+	 * @param \Neos\Flow\Property\MappingResults $mappingResults
 	 */
-	public function __construct($message, \TYPO3\Flow\Property\MappingResults $mappingResults) {
+	public function __construct($message, \Neos\Flow\Property\MappingResults $mappingResults) {
 		parent::__construct($message, '1288952996');
 		$this->mappingResults = $mappingResults;
 	}
 
 	/**
-	 * @return \TYPO3\Flow\Property\MappingResults
+	 * @return \Neos\Flow\Property\MappingResults
 	 */
 	public function getMappingResults() {
 		return $this->mappingResults;
