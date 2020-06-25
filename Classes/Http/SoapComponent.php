@@ -21,6 +21,7 @@ namespace TYPO3\Soap\Http;
  * The TYPO3 project - inspiring people to share!                         *
  *                                                                        */
 
+use GuzzleHttp\Psr7\Response;
 use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Http\Component\ComponentContext;
 use GuzzleHttp\Psr7\Request;
@@ -80,10 +81,15 @@ class SoapComponent extends DispatchComponent {
 		$request = $this->requestBuilder->build($httpRequest);
 		$responseContent = $this->processRequest($request);
 
-		$response = $componentContext->getHttpResponse();
-		$response->setHeader('Content-Type', $this->responseContentType, TRUE);
-		$response->setContent($responseContent);
+		$oldResponse = $componentContext->getHttpResponse();
 
+		$response = new Response(
+		    $oldResponse->getStatusCode(),
+		    ['Content-Type' => $this->responseContentType],
+		    $responseContent
+        );
+
+		$componentContext->replaceHttpResponse($response);
 		$componentContext->setParameter('Neos\Flow\Http\Component\ComponentChain', 'cancel', TRUE);
 	}
 

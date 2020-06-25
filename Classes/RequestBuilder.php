@@ -22,6 +22,7 @@ namespace TYPO3\Soap;
  *                                                                        */
 
 use Doctrine\ORM\Mapping as ORM;
+use GuzzleHttp\Psr7\Uri;
 use Neos\Flow\Http\BaseUriProvider;
 use Neos\Flow\Annotations as Flow;
 
@@ -86,13 +87,18 @@ class RequestBuilder {
 		$servicePath = $this->servicePathForRequestUri($requestUri);
 		$serviceObjectName = $this->serviceObjectNameForServicePath($servicePath);
 
-//		$wsdlUri = clone $baseUri;
-//		$wsdlUri->setPath($requestUri->getPath() . '.wsdl');
+		$wsdlUri = new Uri(Uri::composeComponents(
+		    $requestUri->getScheme(),
+		    $requestUri->getAuthority(),
+		    $requestUri->getPath() . '.wsdl',
+		    $requestUri->getQuery(),
+		    $requestUri->getFragment()
+        ));
 
 		$request = new \TYPO3\Soap\Request('POST', $requestUri);
 		$request->setServiceObjectName($serviceObjectName);
 		$request->setBaseUri($baseUri);
-		$request->setWsdlUri($baseUri);
+		$request->setWsdlUri($wsdlUri);
 		$request->setBody($payload);
 		return $request;
 	}
