@@ -73,6 +73,7 @@ class SoapComponent extends DispatchComponent {
 	 * @return void
 	 */
 	public function handle(ComponentContext $componentContext) {
+
 		$httpRequest = $componentContext->getHttpRequest();
 		if ($this->canHandleRequest($httpRequest) !== self::CANHANDLEREQUEST_OK) {
 			return;
@@ -139,7 +140,7 @@ class SoapComponent extends DispatchComponent {
 		if ($request->getMethod() !== 'POST') {
 			return self::CANHANDLEREQUEST_NOPOSTREQUEST;
 		}
-		if (!array_key_exists('Soapaction', $request->getHeaders())) {
+		if (!array_key_exists('SOAPAction', $request->getHeaders())) {
 			return self::CANHANDLEREQUEST_NOSOAPACTION;
 		}
 		return self::CANHANDLEREQUEST_OK;
