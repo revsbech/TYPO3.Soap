@@ -51,7 +51,7 @@ class SoapComponent extends DispatchComponent {
 	protected $requestBuilder;
 
 	/**
-	 * @Flow\InjectConfiguration(setting="soapResponseContentType")
+	 * @Flow\InjectConfiguration(path="soapResponseContentType", package="TYPO3.Soap")
 	 * @var string
 	 */
 	protected $responseContentType;
